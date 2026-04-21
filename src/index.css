@@ -1,0 +1,140 @@
+/* FinFlow — Global Styles & Design Tokens */
+
+:root {
+  /* Brand */
+  --primary: #7C3AED;
+  --primary-600: #6D28D9;
+  --primary-400: #9F7BFF;
+  --primary-200: #D6C6FF;
+  --primary-100: #EDE4FF;
+  --primary-050: #F6F2FF;
+
+  --coral: #FF6B6B;
+  --coral-400: #FF8A8A;
+  --coral-100: #FFE4E4;
+
+  --mint: #3DD9B3;
+  --mint-400: #6EE6C5;
+  --mint-100: #DDF7EE;
+
+  --sky: #56CCF2;
+  --sky-100: #E0F4FC;
+
+  --yellow: #FFC93C;
+  --yellow-400: #FFD66B;
+  --yellow-100: #FFF4D0;
+
+  /* Neutrals */
+  --fg-1: #16102F;
+  --fg-2: #4B4663;
+  --fg-3: #8A85A3;
+  --fg-on-primary: #FFFFFF;
+
+  --bg: #FAFAFA;
+  --bg-raised: #FFFFFF;
+  --bg-well: #F3F1FA;
+  --bg-tint-primary: #F6F2FF;
+
+  --border: rgba(22,16,50,.06);
+  --border-strong: rgba(22,16,50,.12);
+
+  /* Semantic */
+  --success: #22C55E;
+  --success-100: #DCFCE7;
+  --warning: #F59E0B;
+  --warning-100: #FEF3C7;
+  --error: #EF4444;
+  --error-100: #FEE2E2;
+
+  /* Radius */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-xl: 24px;
+  --r-2xl: 28px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(22,16,50,.05);
+  --shadow-md: 0 6px 16px rgba(60,40,160,.08);
+  --shadow-lg: 0 16px 40px rgba(60,40,160,.12);
+  --shadow-xl: 0 24px 60px rgba(60,40,160,.18);
+  --shadow-glow: 0 12px 32px rgba(124,58,237,.35);
+
+  /* Motion */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --dur-fast: 150ms;
+  --dur: 220ms;
+  --dur-slow: 320ms;
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', 'Be Vietnam Pro', ui-rounded, system-ui, sans-serif;
+  --font-body: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-body);
+  color: var(--fg-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.005em;
+  min-height: 100vh;
+  background: radial-gradient(1100px 700px at 20% -10%, #EDE4FF 0%, transparent 60%),
+              radial-gradient(900px 600px at 100% 100%, #FFE4E4 0%, transparent 55%),
+              #F3F1FA;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 24px 64px;
+}
+
+@keyframes ff-fade {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes ff-up {
+  from { transform: translateY(100%) }
+  to { transform: translateY(0) }
+}
+
+@keyframes ff-slide-in {
+  from { transform: translateX(30px); opacity: 0 }
+  to { transform: translateX(0); opacity: 1 }
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Hide all scrollbars (keep scroll functionality) */
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-corner {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

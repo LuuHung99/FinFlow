@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="finflow-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7C3AED"></stop>
+      <stop offset="55%" stop-color="#B68BFF"></stop>
+      <stop offset="100%" stop-color="#FF6B9D"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#finflow-g)"></rect>
+  <path d="M22 46 V22 C22 19.2386 24.2386 17 27 17 H43 C43 20.3137 40.3137 23 37 23 H28 V30 H40 C40 33.3137 37.3137 36 34 36 H28 V46 C28 48.2091 26.2091 50 24 50 C22.8954 50 22 49.1046 22 48 Z" fill="#fff"></path>
+  <circle cx="45" cy="42" r="4.5" fill="#FFC93C"></circle>
+</svg>

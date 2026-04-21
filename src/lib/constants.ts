@@ -1,0 +1,10 @@
+export const FF_VIOLET = '#7C3AED';
+export const FF_CORAL = '#FF6B6B';
+export const FF_MINT = '#3DD9B3';
+export const FF_YELLOW = '#FFC93C';
+export const FF_SKY = '#56CCF2';
+export const FF_INK = '#16102F';
+export const FF_FG2 = '#4B4663';
+export const FF_FG3 = '#8A85A3';
+export const FF_BG = '#FAFAFA';
+export const FF_WELL = '#F3F1FA';
