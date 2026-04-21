@@ -2076,7 +2076,7 @@ export function HelpScreen({ onBack }: { onBack: () => void }) {
 }
 
 // Settings
-export function SettingsScreen({ onBack }: { onBack: () => void }) {
+export function SettingsScreen({ onBack, onNav }: { onBack: () => void; onNav?: (key: string) => void }) {
   const [notifTx, setNotifTx] = useState(true);
   const [notifBudget, setNotifBudget] = useState(true);
   const [notifGoal, setNotifGoal] = useState(true);
@@ -2152,16 +2152,17 @@ export function SettingsScreen({ onBack }: { onBack: () => void }) {
         <Row
           icon={IconHelp}
           label="Điều khoản sử dụng"
-          onClick={() => {}}
+          onClick={() => onNav?.('terms')}
           isFirst
         />
-        <Row icon={IconLock} label="Chính sách bảo mật" onClick={() => {}} />
+        <Row icon={IconLock} label="Chính sách bảo mật" onClick={() => onNav?.('privacy')} />
         <Row
           icon={IconSparkle}
           label="Nâng cấp Pro"
           detail="Đang dùng Pro ✨"
+          onClick={() => onNav?.('pro')}
         />
-        <Row icon={IconHeart} label="Đánh giá FinFlow" onClick={() => {}} />
+        <Row icon={IconHeart} label="Đánh giá FinFlow" onClick={() => onNav?.('rate')} />
       </Section>
       <div
         style={{
@@ -2172,6 +2173,374 @@ export function SettingsScreen({ onBack }: { onBack: () => void }) {
         }}
       >
         FinFlow v2.4.0 · Build 2026.04.21
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────────── Terms of Service ───────────────────────── */
+export function TermsScreen({ onBack }: { onBack: () => void }) {
+  const sections = [
+    { h: '1. Chấp thuận điều khoản', p: 'Bằng việc sử dụng FinFlow, bạn đồng ý với toàn bộ điều khoản được nêu dưới đây. Nếu không đồng ý, vui lòng ngừng sử dụng ứng dụng.' },
+    { h: '2. Tài khoản người dùng', p: 'Bạn chịu trách nhiệm bảo mật mật khẩu và toàn bộ hoạt động trên tài khoản của mình. Vui lòng thông báo ngay cho FinFlow nếu phát hiện bất kỳ hoạt động trái phép nào.' },
+    { h: '3. Dịch vụ tài chính', p: 'FinFlow cung cấp công cụ quản lý chi tiêu, ngân sách và đầu tư. Mọi quyết định tài chính là của bạn — FinFlow không đảm bảo lợi nhuận từ các khoản đầu tư.' },
+    { h: '4. Giới hạn trách nhiệm', p: 'FinFlow không chịu trách nhiệm với các thiệt hại gián tiếp, mất dữ liệu, hay tổn thất phát sinh từ việc sử dụng ứng dụng ngoài ý muốn.' },
+    { h: '5. Thay đổi điều khoản', p: 'Chúng tôi có thể cập nhật điều khoản bất kỳ lúc nào. Phiên bản mới sẽ có hiệu lực sau 7 ngày kể từ khi thông báo đến người dùng.' },
+    { h: '6. Liên hệ', p: 'Mọi thắc mắc về điều khoản, vui lòng email về legal@finflow.vn hoặc chat với hỗ trợ trong mục Trợ giúp.' },
+  ];
+  return (
+    <div style={{ paddingBottom: 120, background: FF_BG, minHeight: '100%' }}>
+      <SubHeader title="Điều khoản sử dụng" onBack={onBack} />
+      <div style={{ padding: '4px 20px 16px' }}>
+        <div style={{
+          padding: 16, borderRadius: 16,
+          background: 'linear-gradient(135deg,#F6F2FF,#FFE4E4)',
+          border: '1px solid rgba(124,58,237,.1)',
+        }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: FF_VIOLET }}>Cập nhật gần nhất</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: FF_INK, marginTop: 4 }}>21 tháng 4, 2026</div>
+        </div>
+      </div>
+      <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {sections.map((s, i) => (
+          <div key={i} style={{ background: '#fff', borderRadius: 16, padding: 16, border: '1px solid rgba(22,16,50,.06)' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: FF_INK, marginBottom: 8 }}>{s.h}</div>
+            <div style={{ fontSize: 13, color: FF_FG2, lineHeight: 1.6 }}>{s.p}</div>
+          </div>
+        ))}
+        <div style={{ fontSize: 11, color: FF_FG3, textAlign: 'center', padding: '8px 0' }}>
+          © 2026 FinFlow Technologies JSC · Hà Nội, Việt Nam
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────────── Privacy Policy ───────────────────────── */
+export function PrivacyScreen({ onBack }: { onBack: () => void }) {
+  const sections = [
+    { icon: '🔒', h: 'Dữ liệu chúng tôi thu thập', p: 'Thông tin tài khoản (tên, email, SĐT), lịch sử giao dịch, thiết bị đăng nhập, và các tương tác trong app để cải thiện trải nghiệm.' },
+    { icon: '🛡️', h: 'Cách chúng tôi bảo vệ', p: 'Mã hoá AES-256 đầu cuối, hạ tầng AWS chuẩn SOC 2, nhân viên truy cập dữ liệu phải qua MFA và audit log đầy đủ.' },
+    { icon: '🤝', h: 'Chia sẻ với bên thứ ba', p: 'Chúng tôi KHÔNG bán dữ liệu cá nhân. Chỉ chia sẻ với đối tác ngân hàng liên kết khi bạn cho phép, và với cơ quan pháp luật khi có yêu cầu hợp pháp.' },
+    { icon: '👤', h: 'Quyền của bạn', p: 'Xem, sửa, tải về, hoặc xoá toàn bộ dữ liệu bất cứ lúc nào trong Cài đặt → Dữ liệu. Phản hồi yêu cầu trong vòng 30 ngày.' },
+    { icon: '🍪', h: 'Cookie & Analytics', p: 'Chúng tôi dùng cookie cần thiết để duy trì phiên đăng nhập và Google Analytics (ẩn danh) để hiểu cách bạn dùng app.' },
+  ];
+  return (
+    <div style={{ paddingBottom: 120, background: FF_BG, minHeight: '100%' }}>
+      <SubHeader title="Chính sách bảo mật" onBack={onBack} />
+      <div style={{ padding: '4px 20px 16px' }}>
+        <div style={{
+          padding: 20, borderRadius: 20, color: '#fff',
+          background: 'linear-gradient(135deg,#3DD9B3,#7FE8C9)',
+          boxShadow: '0 12px 28px rgba(61,217,179,.3)',
+        }}>
+          <div style={{ fontSize: 28, marginBottom: 6 }}>🛡️</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20, lineHeight: 1.3 }}>
+            Dữ liệu của bạn thuộc về bạn
+          </div>
+          <div style={{ fontSize: 13, opacity: .95, marginTop: 6, lineHeight: 1.5 }}>
+            FinFlow mã hoá mọi giao dịch, không bán dữ liệu cho bên thứ ba, và tuân thủ chuẩn GDPR + PCI DSS.
+          </div>
+        </div>
+      </div>
+      <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {sections.map((s, i) => (
+          <div key={i} style={{ background: '#fff', borderRadius: 16, padding: 16, border: '1px solid rgba(22,16,50,.06)', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+            <div style={{
+              width: 40, height: 40, borderRadius: 12, background: FF_WELL,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0,
+            }}>{s.icon}</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: FF_INK, marginBottom: 4 }}>{s.h}</div>
+              <div style={{ fontSize: 13, color: FF_FG2, lineHeight: 1.55 }}>{s.p}</div>
+            </div>
+          </div>
+        ))}
+        <div style={{ textAlign: 'center', padding: '16px 0' }}>
+          <button style={{
+            padding: '10px 18px', borderRadius: 12, border: '1.5px solid rgba(124,58,237,.25)',
+            background: 'transparent', color: FF_VIOLET,
+            fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13, cursor: 'pointer',
+          }}>📧 privacy@finflow.vn</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────────── Pro Upgrade ───────────────────────── */
+export function ProScreen({ onBack }: { onBack: () => void }) {
+  const [billing, setBilling] = useState<'monthly' | 'yearly'>('yearly');
+  const features = [
+    { icon: '📊', title: 'Phân tích không giới hạn', desc: 'Xem insight 12+ tháng, so sánh theo năm, xuất PDF' },
+    { icon: '🤖', title: 'AI Coach cá nhân', desc: 'Gợi ý chi tiêu thông minh, cảnh báo sớm, mục tiêu tự động' },
+    { icon: '🎨', title: 'Theme tuỳ chỉnh', desc: '8 giao diện cao cấp, icon riêng, widget màn hình chính' },
+    { icon: '💾', title: 'Sao lưu không giới hạn', desc: 'iCloud + Google Drive, lịch sử 5 năm' },
+    { icon: '🔕', title: 'Không quảng cáo', desc: 'Trải nghiệm sạch, tốc độ nhanh hơn 2x' },
+    { icon: '⚡', title: 'Hỗ trợ ưu tiên', desc: 'Chat 24/7, phản hồi dưới 5 phút' },
+  ];
+  const prices = {
+    monthly: { now: '49.000', period: '/ tháng', save: null },
+    yearly: { now: '399.000', period: '/ năm', save: 'Tiết kiệm 33% · chỉ ~33k/tháng' },
+  };
+
+  return (
+    <div style={{ paddingBottom: 120, background: FF_BG, minHeight: '100%' }}>
+      <SubHeader title="FinFlow Pro" onBack={onBack} />
+      <div style={{ padding: '0 20px' }}>
+        {/* Hero */}
+        <div style={{
+          padding: 24, borderRadius: 24, textAlign: 'center',
+          background: 'linear-gradient(135deg,#16102F 0%,#2E1A5C 50%,#7C3AED 100%)',
+          color: '#fff', position: 'relative', overflow: 'hidden',
+          boxShadow: '0 16px 40px rgba(22,16,50,.4)',
+        }}>
+          <div style={{ position: 'absolute', top: -60, right: -40, width: 200, height: 200, background: 'rgba(255,201,60,.3)', borderRadius: '50%', filter: 'blur(30px)' }} />
+          <div style={{ position: 'absolute', bottom: -60, left: -40, width: 180, height: 180, background: 'rgba(255,107,157,.25)', borderRadius: '50%', filter: 'blur(30px)' }} />
+          <div style={{ position: 'relative' }}>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px',
+              borderRadius: 999, background: 'linear-gradient(135deg,#FFC93C,#FF6B9D)',
+              fontSize: 11, fontWeight: 700, letterSpacing: '.1em', marginBottom: 14,
+            }}>✨ PRO</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 26, letterSpacing: '-.02em', lineHeight: 1.2 }}>
+              Mở khoá toàn bộ<br />sức mạnh FinFlow
+            </div>
+            <div style={{ fontSize: 13, opacity: .9, marginTop: 10, lineHeight: 1.5 }}>
+              Đang được <b>240.000+ người</b> Việt tin dùng ⭐ 4.9/5
+            </div>
+          </div>
+        </div>
+
+        {/* Billing toggle */}
+        <div style={{ display: 'flex', gap: 6, background: FF_WELL, padding: 4, borderRadius: 14, marginTop: 18, marginBottom: 14 }}>
+          {(['monthly', 'yearly'] as const).map(p => (
+            <button key={p} onClick={() => setBilling(p)} style={{
+              flex: 1, padding: '10px 0', borderRadius: 10, border: 0,
+              background: billing === p ? '#fff' : 'transparent',
+              color: billing === p ? FF_INK : FF_FG2,
+              fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13, cursor: 'pointer',
+              boxShadow: billing === p ? '0 2px 6px rgba(60,40,160,.08)' : 'none',
+              position: 'relative',
+            }}>
+              {p === 'monthly' ? 'Theo tháng' : 'Theo năm'}
+              {p === 'yearly' && billing !== 'yearly' && (
+                <span style={{
+                  position: 'absolute', top: -8, right: 4,
+                  padding: '2px 6px', borderRadius: 6, background: FF_CORAL, color: '#fff',
+                  fontSize: 9, fontWeight: 700,
+                }}>-33%</span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Price card */}
+        <div style={{
+          background: '#fff', borderRadius: 20, padding: 20,
+          border: `2px solid ${FF_VIOLET}`,
+          boxShadow: '0 10px 24px rgba(124,58,237,.12)',
+          marginBottom: 18,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 36, color: FF_INK, letterSpacing: '-.02em', fontVariantNumeric: 'tabular-nums' }}>
+              {prices[billing].now}
+            </div>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: FF_FG2 }}>₫</div>
+            <div style={{ fontSize: 14, color: FF_FG3, marginLeft: 4 }}>{prices[billing].period}</div>
+          </div>
+          {prices[billing].save && (
+            <div style={{
+              display: 'inline-block', marginTop: 8, padding: '4px 10px', borderRadius: 8,
+              background: '#DCFCE7', color: '#15803D', fontSize: 11, fontWeight: 700,
+            }}>✓ {prices[billing].save}</div>
+          )}
+          <div style={{ fontSize: 12, color: FF_FG3, marginTop: 10 }}>
+            Dùng thử <b style={{ color: FF_INK }}>7 ngày miễn phí</b> · huỷ bất cứ lúc nào
+          </div>
+        </div>
+
+        {/* Features */}
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: FF_FG3, margin: '14px 4px 10px' }}>
+          Bạn sẽ nhận được
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 18 }}>
+          {features.map((f, i) => (
+            <div key={i} style={{
+              display: 'flex', alignItems: 'flex-start', gap: 12,
+              background: '#fff', borderRadius: 14, padding: 14,
+              border: '1px solid rgba(22,16,50,.06)',
+            }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: 12, background: FF_WELL,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0,
+              }}>{f.icon}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: FF_INK }}>{f.title}</div>
+                <div style={{ fontSize: 12, color: FF_FG3, marginTop: 2, lineHeight: 1.45 }}>{f.desc}</div>
+              </div>
+              <div style={{ color: FF_MINT, fontSize: 18, fontWeight: 700 }}>✓</div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <FFButton onClick={onBack}>Bắt đầu dùng thử 7 ngày miễn phí</FFButton>
+        <div style={{ textAlign: 'center', fontSize: 11, color: FF_FG3, marginTop: 10, lineHeight: 1.5 }}>
+          Không thu phí trong 7 ngày đầu · tự động gia hạn sau đó · huỷ bất cứ lúc nào
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────────── Rate FinFlow ───────────────────────── */
+export function RateScreen({ onBack }: { onBack: () => void }) {
+  const [stars, setStars] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [feedback, setFeedback] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [sent, setSent] = useState(false);
+
+  const allTags = ['Giao diện đẹp', 'Dễ dùng', 'Nhiều tính năng', 'Tốc độ nhanh', 'Hỗ trợ tốt', 'AI thông minh'];
+
+  const toggleTag = (t: string) => {
+    setTags(ts => ts.includes(t) ? ts.filter(x => x !== t) : [...ts, t]);
+  };
+
+  const submit = () => {
+    if (stars === 0) return;
+    setSent(true);
+    setTimeout(() => onBack(), 1600);
+  };
+
+  if (sent) {
+    return (
+      <div style={{ paddingBottom: 120, background: FF_BG, minHeight: '100%' }}>
+        <SubHeader title="Đánh giá FinFlow" onBack={onBack} />
+        <div style={{ padding: '40px 20px', textAlign: 'center' }}>
+          <div style={{
+            width: 120, height: 120, borderRadius: 60, margin: '20px auto',
+            background: 'linear-gradient(135deg,#3DD9B3,#7FE8C9)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 56,
+            boxShadow: '0 16px 40px rgba(61,217,179,.4)',
+          }}>🎉</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 24, color: FF_INK, letterSpacing: '-.01em' }}>
+            Cảm ơn bạn rất nhiều!
+          </div>
+          <div style={{ fontSize: 14, color: FF_FG2, marginTop: 8, lineHeight: 1.5, maxWidth: 280, margin: '8px auto 0' }}>
+            Phản hồi của bạn giúp FinFlow tốt hơn mỗi ngày 💜
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ paddingBottom: 120, background: FF_BG, minHeight: '100%' }}>
+      <SubHeader title="Đánh giá FinFlow" onBack={onBack} />
+      <div style={{ padding: '0 20px' }}>
+        {/* Hero */}
+        <div style={{ textAlign: 'center', padding: '20px 0 28px' }}>
+          <div style={{ fontSize: 56, marginBottom: 8 }}>💜</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, color: FF_INK, letterSpacing: '-.01em', lineHeight: 1.3 }}>
+            Bạn thấy FinFlow thế nào?
+          </div>
+          <div style={{ fontSize: 13, color: FF_FG2, marginTop: 6 }}>
+            Đánh giá của bạn là động lực lớn cho team 🚀
+          </div>
+        </div>
+
+        {/* Stars */}
+        <div style={{
+          display: 'flex', justifyContent: 'center', gap: 12,
+          padding: '20px 0', marginBottom: 20,
+        }}>
+          {[1, 2, 3, 4, 5].map(n => {
+            const active = n <= (hover || stars);
+            return (
+              <button
+                key={n}
+                onClick={() => setStars(n)}
+                onMouseEnter={() => setHover(n)}
+                onMouseLeave={() => setHover(0)}
+                style={{
+                  width: 44, height: 44, borderRadius: 12, border: 0,
+                  background: 'transparent', cursor: 'pointer',
+                  fontSize: 38, lineHeight: 1,
+                  filter: active ? 'none' : 'grayscale(1) opacity(.3)',
+                  transform: active ? 'scale(1.1)' : 'scale(1)',
+                  transition: 'all 180ms cubic-bezier(.22,1,.36,1)',
+                }}
+              >⭐</button>
+            );
+          })}
+        </div>
+
+        {stars > 0 && (
+          <>
+            {/* Label */}
+            <div style={{
+              textAlign: 'center', fontFamily: 'var(--font-display)', fontWeight: 700,
+              fontSize: 18, color: FF_VIOLET, marginBottom: 20,
+              animation: 'ff-fade 220ms cubic-bezier(.22,1,.36,1)',
+            }}>
+              {stars === 5 ? 'Tuyệt vời! 🔥' : stars === 4 ? 'Rất tốt 👏' : stars === 3 ? 'Tạm ổn' : stars === 2 ? 'Cần cải thiện' : 'Chưa hài lòng'}
+            </div>
+
+            {/* Tags */}
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: FF_FG3, marginBottom: 10 }}>
+              Điều bạn thích nhất
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
+              {allTags.map(t => {
+                const on = tags.includes(t);
+                return (
+                  <button key={t} onClick={() => toggleTag(t)} style={{
+                    padding: '8px 14px', borderRadius: 999,
+                    border: `1.5px solid ${on ? FF_VIOLET : 'rgba(22,16,50,.1)'}`,
+                    background: on ? FF_VIOLET : '#fff',
+                    color: on ? '#fff' : FF_FG2,
+                    fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 12, cursor: 'pointer',
+                    transition: 'all 150ms',
+                  }}>{t}</button>
+                );
+              })}
+            </div>
+
+            {/* Feedback */}
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: FF_FG3, marginBottom: 10 }}>
+              Góp ý thêm (không bắt buộc)
+            </div>
+            <textarea
+              value={feedback}
+              onChange={e => setFeedback(e.target.value)}
+              placeholder="Chia sẻ cảm nhận, tính năng mong muốn, hay bất kỳ điều gì bạn muốn team FinFlow biết..."
+              style={{
+                width: '100%', minHeight: 100, padding: 14, borderRadius: 14,
+                border: '1.5px solid rgba(22,16,50,.1)',
+                fontFamily: 'var(--font-body)', fontSize: 14, color: FF_INK,
+                outline: 'none', resize: 'vertical', boxSizing: 'border-box',
+                marginBottom: 18,
+              }}
+            />
+
+            <FFButton onClick={submit}>
+              Gửi đánh giá {stars}⭐
+            </FFButton>
+
+            {stars >= 4 && (
+              <div style={{
+                marginTop: 14, padding: 14, borderRadius: 14,
+                background: 'linear-gradient(135deg,#F6F2FF,#FFE4E4)',
+                border: '1px solid rgba(124,58,237,.1)',
+                fontSize: 13, color: FF_INK, lineHeight: 1.5, textAlign: 'center',
+              }}>
+                💜 Nếu thích FinFlow, bạn có thể đánh giá trên <b style={{ color: FF_VIOLET }}>App Store / Google Play</b> để ủng hộ team nhé!
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

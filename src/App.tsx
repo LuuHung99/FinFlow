@@ -23,6 +23,10 @@ import {
   InviteScreen,
   HelpScreen,
   SettingsScreen,
+  TermsScreen,
+  PrivacyScreen,
+  ProScreen,
+  RateScreen,
 } from "./screens/ProfileSub";
 import type { Transaction } from "./lib/mockData";
 
@@ -41,7 +45,11 @@ type Screen =
   | "security"
   | "invite"
   | "help"
-  | "settings";
+  | "settings"
+  | "terms"
+  | "privacy"
+  | "pro"
+  | "rate";
 
 export default function App() {
   const [tab, setTab] = useState("home");
@@ -73,6 +81,10 @@ export default function App() {
         "invite",
         "help",
         "settings",
+        "terms",
+        "privacy",
+        "pro",
+        "rate",
       ].includes(k)
     ) {
       setScreen(k as Screen);
@@ -161,7 +173,15 @@ export default function App() {
   } else if (screen === "help") {
     body = <HelpScreen onBack={() => setScreen("app")} />;
   } else if (screen === "settings") {
-    body = <SettingsScreen onBack={() => setScreen("app")} />;
+    body = <SettingsScreen onBack={() => setScreen("app")} onNav={nav} />;
+  } else if (screen === "terms") {
+    body = <TermsScreen onBack={() => setScreen("settings")} />;
+  } else if (screen === "privacy") {
+    body = <PrivacyScreen onBack={() => setScreen("settings")} />;
+  } else if (screen === "pro") {
+    body = <ProScreen onBack={() => setScreen("settings")} />;
+  } else if (screen === "rate") {
+    body = <RateScreen onBack={() => setScreen("settings")} />;
   } else if (openTx) {
     body = (
       <TxDetailScreen
